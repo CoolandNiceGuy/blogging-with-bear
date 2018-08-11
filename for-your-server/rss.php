@@ -76,6 +76,7 @@ if ( $dir = opendir("./public") )
 		// Add an RSS item for this note
 
 		$content .= "	<item>\n";
+		$content .= "		<title><![CDATA[$title]]></title>\n";
 		$content .= "		<description><![CDATA[$body]]></description>\n";
 		$content .= "		<link>{$url_root}index.php%3Fpage=$url</link>\n";
 		$content .= "		<pubDate>$page_date</pubDate>\n";
