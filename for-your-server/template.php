@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title><?= $html_title ?></title>
-		<link rel="stylesheet" type="text/css" href="/wiki/main.css">
+		<link rel="stylesheet" type="text/css" href="<?= $url_root ?>main.css">
 	</head>
 	<body>
 
