@@ -181,7 +181,8 @@ foreach ( $filenames as $page )
 	// This should probably be cached or just generally done in a much
 	// smarter way.
 
-	$output = shell_exec("grep -l \"\\[\\[$page\\]\\]\" ./public/*.txt");
+	$output = shell_exec("grep -l \"\\[\\[$title\\]\\]\" ./public/*.txt");
+	
 	$lines = preg_split("/\n/", $output);
 	$references = 0;
 
