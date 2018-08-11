@@ -2,18 +2,20 @@
 
 ## A set of scripts for exporting notes from Bear to a web server
 
+By Steven Frank <stevenf@panic.com>
+
 ## How to use
 
 On the server side:
 
-1. You will need a semi-recent PHP.  I use PHP 7 and haven't tried it with older versions, but later version of 5 are probably OK.
-2. Place the files from the `for-your-server`  directory somewhere on your web server.  I put them all in a directory called `wiki` in my web root, for example.
-3. Edit `config.php` to reflect your particular situation.
+1. You will need a semi-recent PHP.  I use PHP 7 and haven't tried it with older versions, but later versions of 5 are probably OK.
+2. Place the files contained in the `for-your-server`  directory somewhere on your web server.  I put them all in a directory called `wiki` in my web root, for example.
+3. Edit variables at the top of  `config.php` to reflect your particular situation.
 
 Then, the general idea is:
 
 1. Tag some of your Bear notes as `public`
-2. Datestamp these notes by placing an H6 heading somewhere in each note that contains the text `Date:` followed by a space, and the output of the "Insert Current Date" command in Bear (Cmd-Shift-7)
+2. Datestamp each of these notes by placing an H6 heading somewhere in each note that contains the text `Date:` followed by a space, and the output of the "Insert Current Date" command in Bear (Cmd-Shift-7)
 3. From your Mac's Terminal, run `bear-export.php`
 
 This extracts the public-tagged notes and rsyncs them to your server.  
