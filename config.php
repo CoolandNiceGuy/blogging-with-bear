@@ -47,7 +47,7 @@ function format($file, $title)
 			
 			// Return as <a> tag
 			
-            return "<a href=\"$url_root?page={$link}\">{$name}</a>";
+            return "<a href=\"$url_root{$link}.html\">{$name}</a>";
         }, $file);
 
 	// I don't know what to do with Bear's #tags and #tags# yet, so just remove them
