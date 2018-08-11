@@ -4,6 +4,9 @@
 
 // Edit these variables for your particular setup:
 
+$username = 'stevenf';	// your Mac username
+$publish_cmd = "rsync -avz --delete ./public/ \"linode:/var/www/stevenf/wiki\"";
+
 $time_zone = 'America/Los_Angeles';
 $url_root = 'https://stevenf.com/wiki/';
 $html_title = '~stevenf wikiblog';

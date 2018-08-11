@@ -21,12 +21,10 @@
 //
 // ALSO: 
 // 
-// You'll want to change these vars:
-
-$username = 'stevenf';
-$publish_cmd = "rsync -avz --delete ./public/ \"linode:/var/www/stevenf/wiki\"";
+// You'll want to change the vars in config.php:
 
 require 'config.php';
+
 date_default_timezone_set($time_zone);
 
 // This rsync command works for me, because "linode" is an alias for the real hostname
