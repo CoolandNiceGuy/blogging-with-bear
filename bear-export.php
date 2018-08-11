@@ -332,10 +332,10 @@ system("cp main.css ./public/");
 
 // Run the publish command
 
+system("rm public/*.txt");
 system($publish_cmd);
 
 // Clean up after ourselves
 
-system("rm public/*.txt");
 system("rm -r public bear.sqlite");
 
