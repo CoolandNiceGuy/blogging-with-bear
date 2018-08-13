@@ -1,6 +1,6 @@
 # blogging-with-bear
 
-## A set of scripts for exporting notes from Bear to a web server
+## A set of scripts for exporting notes from [Bear](http://www.bear-writer.com) to a web server
 
 By Steven Frank <stevenf@panic.com>
 
