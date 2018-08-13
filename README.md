@@ -14,7 +14,7 @@ The general idea is:
 
 This extracts the public-tagged notes, formats them as a static HTML site, and rsyncs them to your server.  
 
-You will need to change some variables in `bear-export.php` to make this work for your particular setup.
+You will need to change some variables in `config.php` to make this work for your particular setup.
 
 ## Acknowledgements
 
