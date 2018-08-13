@@ -7,6 +7,11 @@
 $username = 'stevenf';	// your Mac username
 $publish_cmd = "rsync -avz --delete ./public/ \"linode:/var/www/stevenf/wiki\"";
 
+// This rsync command works for me, because "linode" is an alias for the real hostname
+// in my ~/.ssh/config, and I've already set up password-less, key-based authentication.
+// It rsyncs the directory "public" in the current directory to create/update
+// "/var/www/stevenf/wiki/public" on my webserver.
+
 $time_zone = 'America/Los_Angeles';
 $url_root = 'https://stevenf.com/wiki/';
 $html_title = '~stevenf wikiblog';
