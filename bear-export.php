@@ -27,11 +27,6 @@ require 'config.php';
 
 date_default_timezone_set($time_zone);
 
-// This rsync command works for me, because "linode" is an alias for the real hostname
-// in my ~/.ssh/config, and I've already set up password-less, key-based authentication.
-// It rsyncs the directory "public" in the current directory to create/update
-// "/var/www/stevenf/wiki/public" on my webserver.
-
 // Step 1: Copy Bear's sqlite database out of its container
 
 system("cp \"/Users/{$username}/Library/Containers/net.shinyfrog.bear/Data/Documents/Application Data/database.sqlite\" bear.sqlite");
@@ -40,6 +35,8 @@ system("cp \"/Users/{$username}/Library/Containers/net.shinyfrog.bear/Data/Docum
 
 system("rm -r public");
 system("mkdir public");
+
+// Step 2: Create .txt files from all the notes tagged "public" 
 
 // Open the DB
 
@@ -90,7 +87,10 @@ while ( $row = $result->fetchArray() )
 
 $db->close();
 
-// Build the index page by enumerating files in ./public
+// Step 3: Build the index page (public/index.html) by enumerating 
+// the .txt files in ./public
+
+$filenames = array();
 
 if ( $dir = opendir("./public") )
 {
@@ -158,7 +158,7 @@ $fp = fopen("public/index.html", "w");
 fwrite($fp, $html);
 fclose($fp);
 
-// Write individual pages
+// Step 4: Write individual HTML pages for each exported .txt note
 
 foreach ( $filenames as $page )
 {
@@ -229,91 +229,57 @@ foreach ( $filenames as $page )
 	fclose($fp);
 }
 
-// Write public/index.xml
+// Step 5: Create RSS feed at public/index.xml
 
-$content = "";
-$filenames = array();
-
-if ( $dir = opendir("./public") )
-{
-	// Iterate over all notes in public directory
+$content = '';
 	
-	while ( $filename = readdir($dir) )
+$rss_date = '';
+$i = 0;
+
+// For each note found...
+
+foreach ( $filenames as $timestamp => $filename )
+{	
+	// Extract and URL encode its title
+	
+	print "-> $filename\n";
+	$title = preg_replace("/\.txt$/", '', $filename);
+	$url = rawurlencode($title);
+	
+	// Generate an RSS-compatible date from the datestamp
+	
+	$page_date = date("r", $timestamp);
+	
+	if ( $rss_date == '' )
 	{
-		if ( $filename{0} == '.' || !is_file("./public/$filename") || preg_match("/\.html$/", $filename) )
-		{
-			// Skip dot files
-			
-			continue;
-		}
+		// Set the pubDate for the feed to the most recent note
 		
-		// Read this note
-		
-		$file = file_get_contents("./public/$filename");
-		
-		// Extract timestamp
-		
-		$timestamp = get_timestamp($file);
-		
-		// Add to list of known notes indexed by timestamp
-		
-		$filenames[$timestamp] = $filename;
+		$rss_date = $page_date;
 	}
+	
+	// Read the note and apply formatting
+	
+	$body = file_get_contents("./public/$filename");
+	$body = format($body, $title);
+	
+	// Add an RSS item for this note
 
-	closedir($dir);
+	$content .= "	<item>\n";
+	$content .= "		<title><![CDATA[$title]]></title>\n";
+	$content .= "		<description><![CDATA[$body]]></description>\n";
+	$content .= "		<link>{$url_root}$url.html</link>\n";
+	$content .= "		<pubDate>$page_date</pubDate>\n";
+	$content .= "		<guid isPermaLink=\"true\">{$url_root}$url.html</guid>\n";
+	$content .= "	</item>\n";
 	
-	// Reverse-chrono sort the list of notes
+	// Stop if we've done the maximum number ofnotes
 	
-	krsort($filenames);
-	
-	$rss_date = '';
-	$i = 0;
-	
-	// For each note found...
-	
-	foreach ( $filenames as $timestamp => $filename )
-	{	
-		// Extract and URL encode its title
-		
-		print "-> $filename\n";
-		$title = preg_replace("/\.txt$/", '', $filename);
-		$url = rawurlencode($title);
-		
-		// Generate an RSS-compatible date from the datestamp
-		
-		$page_date = date("r", $timestamp);
-		
-		if ( $rss_date == '' )
-		{
-			// Set the pubDate for the feed to the most recent note
-			
-			$rss_date = $page_date;
-		}
-		
-		// Read the note and apply formatting
-		
-		$body = file_get_contents("./public/$filename");
-		$body = format($body, $title);
-		
-		// Add an RSS item for this note
+	++$i;
 
-		$content .= "	<item>\n";
-		$content .= "		<title><![CDATA[$title]]></title>\n";
-		$content .= "		<description><![CDATA[$body]]></description>\n";
-		$content .= "		<link>{$url_root}$url.html</link>\n";
-		$content .= "		<pubDate>$page_date</pubDate>\n";
-		$content .= "		<guid isPermaLink=\"true\">{$url_root}$url.html</guid>\n";
-		$content .= "	</item>\n";
-		
-		// Stop if we've done the maximum number ofnotes
-		
-		++$i;
-
-		if ( $i == $rss_max )
-		{
-			break;
-		}				
-	}
+	if ( $i == $rss_max )
+	{
+		break;
+	}				
 }
 
 // Now that we have everything, push it through the RSS template
@@ -327,18 +293,20 @@ $fp = fopen("public/index.xml", "w");
 fwrite($fp, $html);
 fclose($fp);
 
-// Copy CSS
+// Step 6: Copy CSS
 
 system("cp main.css ./public/");
 
-// Run the publish command
+// Step 7: Run the publish command
 
 system("rm public/*.txt");
 system($publish_cmd);
 
-// Clean up after ourselves
+// Step 8: Clean up after ourselves
 
 system("rm -r public bear.sqlite");
+
+// Done!
 
 exit;
 
