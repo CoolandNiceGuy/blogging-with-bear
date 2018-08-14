@@ -4,7 +4,7 @@
 
 // Edit these variables for your particular setup:
 
-$username = 'stevenf';	// your Mac username
+$username = getenv('USER');	// your Mac username
 $publish_cmd = "rsync -avz --delete ./public/ \"linode:/var/www/stevenf/wiki\"";
 
 // This rsync command works for me, because "linode" is an alias for the real hostname
