@@ -27,6 +27,7 @@ require 'config.php';
 
 date_default_timezone_set($time_zone);
 
+$bear_img_dir = "/Users/{$username}/Library/Containers/net.shinyfrog.bear/Data/Documents/Application Data/Local Files/Note Images/";
 // Step 1: Copy Bear's sqlite database out of its container
 
 system("cp \"/Users/{$username}/Library/Containers/net.shinyfrog.bear/Data/Documents/Application Data/database.sqlite\" bear.sqlite");
@@ -34,7 +35,7 @@ system("cp \"/Users/{$username}/Library/Containers/net.shinyfrog.bear/Data/Docum
 // Remove any existing "public" directory and re-create it
 
 system("rm -r public");
-system("mkdir public");
+system("mkdir -p public/images");
 
 // Step 2: Create .txt files from all the notes tagged "public" 
 
@@ -352,8 +353,29 @@ function format($file, $title)
 
 	// Convert image references to <img> tags
 	
-	$file = preg_replace("/\[image\:.*\/(.*?)\]/", "<img src=\"public/" . rawurlencode($title) . "/\\1\">", $file);
 	
+	# find all [image:] tags within the note
+	preg_match_all("/\[image\:.*?\]/mis", $file, $images);
+
+
+	# for all found matches
+	#  - extract the path 
+	#  - copy the image file to public/images
+	#  - replace the [image:] with <img> referencing the new file
+	# Bear stores each image in a note related subdir, but here they all end up in the same dir
+	foreach($images[0] as $image) {
+		global $bear_img_dir;
+		preg_match("/\[image\:(.*?)\]/mis", $image, $matches);
+		$image_file_path = $matches[1];
+		system("cp -R \"" . $bear_img_dir . $image_file_path . "\" public/images/");
+
+		preg_match("/.*\/(.*)$/", $image_file_path, $image_subpath_match);
+
+		$file = preg_replace("/\[image\:" . preg_quote($image_file_path, "/") . "\]/", "<img src=\"images/" . $image_subpath_match[1] . "\">", $file);
+
+	}
+
+
 	// Remove the datestamp, as it's extracted out into the sidebar elsewhere
 	
 	$file = preg_replace("/^###### Date: .*$/m", "", $file);
