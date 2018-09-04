@@ -40,6 +40,10 @@ header h1 a {
 	text-decoration: none;
 }
 
+img {
+	max-width: 500px;
+}
+
 nav .time {
 	display: block;
 	overflow: hidden;
@@ -146,11 +150,12 @@ ul li.index {
 }
 
 main article ol {
-	margin: 0 20px 0 40px;
+	margin: 0 20px 20px 40px;
 }
 
 main article ol li {
 	margin-bottom: 6px;
+	line-height: 1.5em;
 }
 
 .seealso {
