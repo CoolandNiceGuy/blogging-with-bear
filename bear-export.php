@@ -1,8 +1,6 @@
 #!/usr/bin/php
 <?php
-
 // bear-export.php
-// Part of Blogging with Bear by Steven Frank <stevenf@panic.com>
 //
 // This script is meant to be run on a Mac with a fully synced-up Bear installation
 // that has some notes tagged as #public.
@@ -24,17 +22,18 @@
 // You'll want to change the vars in config.php:
 
 require 'config.php';
+require __DIR__ . '/GitPublishHelper.php';
 
 date_default_timezone_set($time_zone);
 
-$bear_img_dir = "/Users/{$username}/Library/Containers/net.shinyfrog.bear/Data/Documents/Application Data/Local Files/Note Images/";
+$bear_img_dir = "/Users/{$username}/Library/Group Containers/9K33E3U3T4.net.shinyfrog.bear/Application Data/Local Files/Note Images/";
 // Step 1: Copy Bear's sqlite database out of its container
 
-system("cp \"/Users/{$username}/Library/Containers/net.shinyfrog.bear/Data/Documents/Application Data/database.sqlite\" bear.sqlite");
+system("cp \"/Users/{$username}/Library/Group Containers/9K33E3U3T4.net.shinyfrog.bear/Application Data/database.sqlite\" bear.sqlite");
 
 // Remove any existing "public" directory and re-create it
 
-system("rm -r public");
+system("rm -rf public");
 system("mkdir -p public/images");
 
 // Step 2: Create .txt files from all the notes tagged "public" 
@@ -52,13 +51,13 @@ $public_tag_id = $row['Z_PK'];
 
 // Get the IDs of notes that have the "public" tag
 
-$result = $db->query("SELECT * FROM Z_5TAGS WHERE Z_10TAGS = $public_tag_id");
+$result = $db->query("SELECT * FROM Z_7TAGS WHERE Z_14TAGS = $public_tag_id");
 
 while ( $row = $result->fetchArray() )
 {
 	// For each note...
 	
-	$note_id = $row['Z_5NOTES'];
+	$note_id = $row['Z_7NOTES'];
 
 	$result2 = $db->query("SELECT * FROM ZSFNOTE WHERE Z_PK = $note_id");
 
@@ -92,6 +91,7 @@ $db->close();
 // the .txt files in ./public
 
 $filenames = array();
+$content = "";
 
 if ( $dir = opendir("./public") )
 {
@@ -99,7 +99,7 @@ if ( $dir = opendir("./public") )
 	
 	while ( $filename = readdir($dir) )
 	{
-		if ( $filename{0} == '.' || !is_file("./public/$filename") )
+		if ( $filename[0] == '.' || !is_file("./public/$filename") )
 		{
 			// Skip dot files
 			continue;
@@ -153,7 +153,7 @@ if ( $dir = opendir("./public") )
 ob_start();
 require "html_template.php";
 $html = ob_get_clean();
-ob_end_clean();
+if (ob_get_length()) ob_end_clean();
 
 $fp = fopen("public/index.html", "w");
 fwrite($fp, $html);
@@ -184,7 +184,7 @@ foreach ( $filenames as $page )
 
 	$output = shell_exec("grep -l \"\\[\\[$title\\]\\]\" ./public/*.txt");
 	
-	$lines = preg_split("/\n/", $output);
+	$lines = preg_split("/\n/", $output ?? '');
 	$references = 0;
 
 	foreach ( $lines as $line )
@@ -223,7 +223,7 @@ foreach ( $filenames as $page )
 	ob_start();
 	require "html_template.php";
 	$html = ob_get_clean();
-	ob_end_clean();
+	if (ob_get_length()) ob_end_clean();
 
 	$fp = fopen("public/$title.html", "w");
 	fwrite($fp, $html);
@@ -288,7 +288,7 @@ foreach ( $filenames as $timestamp => $filename )
 ob_start();
 require "rss_template.php";
 $html = ob_get_clean();
-ob_end_clean();
+if (ob_get_length()) ob_end_clean();
 
 $fp = fopen("public/index.xml", "w");
 fwrite($fp, $html);
@@ -301,11 +301,12 @@ system("cp main.css ./public/");
 // Step 7: Run the publish command
 
 system("rm public/*.txt");
-system($publish_cmd);
+
+publish_changes();
 
 // Step 8: Clean up after ourselves
 
-system("rm -r public bear.sqlite");
+system("rm -rf public bear.sqlite");
 
 // Done!
 

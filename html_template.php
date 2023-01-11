@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- Part of Blogging with Bear by Steven Frank <stevenf@panic.com> -->
 	<head>
 		<meta charset="utf-8">
 		<title><?= $html_title ?></title>
