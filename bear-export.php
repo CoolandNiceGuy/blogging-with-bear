@@ -129,7 +129,6 @@ if ( $dir = opendir("./public") )
 		$url = rawurlencode($title);
 		
 		// Format the date
-		
 		if ( $timestamp == 0 )
 		{
 			$date = "Undated";
@@ -302,7 +301,7 @@ system("cp main.css ./public/");
 
 system("rm public/*.txt");
 
-publish_changes();
+publish_changes(); 
 
 // Step 8: Clean up after ourselves
 
@@ -396,19 +395,17 @@ function get_timestamp($file)
 	// ###### Date: Aug 10, 2018 at 3:47 PM
 	//
 	// (Note: easily generate that with Cmd-Shift-7 in Bear)
-	
-	if ( preg_match("/^###### Date: (.*?)$/ms", $file, $matches) )
+
+	if ( preg_match("/^###### (.*?)$/ms", $file, $matches) )
 	{
 		// Remove the substring " at " so PHP can parse the date,
 		// and convert it into a UNIX timestamp
-		
 		$matches[1] = preg_replace("/ at /", " ", $matches[1]);
 		$timestamp = strtotime($matches[1]);
 	}
 	else
 	{
 		// No datestamp found
-		
 		$timestamp = 0;
 	}
 

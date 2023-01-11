@@ -13,8 +13,8 @@ $username = "landonborges";	// your Mac username
 // "/var/www/stevenf/wiki/" on my webserver.
 
 $time_zone = 'America/Chicago';
-$url_root = 'https://glassvillage.io/blog/';
-$html_title = 'blog';
+$url_root = 'https://blog.glassvillage.io';
+$html_title = 'Blog';
 $copyright = "&copy;". date("Y") . " <a href=\"https://glassvillage.io/\"><b>Landon Borges</b></a>";
 $rss_max = 20;	// maximum number of notes to include in RSS feed
 $rss_title = 'glassvillage';
