@@ -2,7 +2,7 @@
 
 ## A set of scripts for exporting notes from [Bear](http://www.bear-writer.com) to Github
 
-By Landon Borges <stevenf@panic.com>
+By Landon Borges
 
 ## How to use
 
