@@ -301,7 +301,7 @@ system("cp main.css ./public/");
 
 system("rm public/*.txt");
 
-publish_changes(); 
+publish_changes();  
 
 // Step 8: Clean up after ourselves
 

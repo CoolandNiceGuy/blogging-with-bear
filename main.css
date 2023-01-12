@@ -6,24 +6,31 @@
 	margin: 0;
 	padding: 0;
 	font-weight: normal;
+	color: #ddd;
 }
 
 html {
-	border-top: 8px solid #f00;
 	font-family: Helvetica, sans-serif;
-	color: #000;
 }
 
 b {
 	font-weight: bold;
 }
 
+a {
+	color: #4987b6;
+}
+
 body {
-	background-color: #ddd;
+	background-color: rgb(27 27 30);
+}
+
+a > b {
+	color: #4987b6;
 }
 
 header {
-	background-color: #fff;
+	background-color:#27282b;
 	padding: 20px 40px 30px 20px;
 	overflow: hidden;
 }
@@ -31,7 +38,7 @@ header {
 header h1 a {
 	display: block;
 	overflow: hidden;
-	color: #f00;
+	color: #ddd;
 	font-weight: bold;
 	float: left;
 	font-size: 28px;
@@ -52,8 +59,8 @@ nav .time {
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-right: 20px;
-	color: #000;
-	border-right: 4px solid #000;
+	color: #ddd;
+	border-right: 4px solid #ddd;
 	text-align: right;
 }
 
@@ -63,10 +70,6 @@ nav h1 {
 	border-right: 4px solid #777;
 	padding-right: 20px;
 	color: #777
-}
-
-a {
-	color: #000;
 }
 
 article  {
@@ -83,7 +86,7 @@ nav {
 }
 
 main {
-	background-color: #eee;
+	background-color: rgb(27 27 30);
 	padding: 40px 120px 40px 40px;
 }
 
@@ -117,7 +120,6 @@ main p {
 }
 
 footer {
-	background-color: #ddd;
 	padding: 40px;
 	font-size: 14px;
 	text-align: center;
