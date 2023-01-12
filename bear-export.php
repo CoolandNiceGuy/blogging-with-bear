@@ -8,8 +8,6 @@
 // Run it from wherever it lives. The PHP that ships with macOS 10.13 has the
 // necessary dependencies.
 //
-// $ chmod +x bear-export.php
-// $ ./bear-export.php
 //
 // BEFORE YOU RUN THIS: 
 //
