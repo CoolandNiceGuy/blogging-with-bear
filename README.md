@@ -1,18 +1,18 @@
 # blogging-with-bear
 
-## A set of scripts for exporting notes from [Bear](http://www.bear-writer.com) to a web server
+## A set of scripts for exporting notes from [Bear](http://www.bear-writer.com) to Github
 
-By Steven Frank <stevenf@panic.com>
+By Landon Borges
 
 ## How to use
 
 The general idea is:
 
 1. Tag some of your Bear notes as `public`
-2. Datestamp each of these notes by placing an H6 heading somewhere in each note that contains the text `Date:` followed by a space, and the output of the "Insert Current Date" command in Bear (Cmd-Shift-7)
+2. Datestamp each of these notes by placing an H6 heading somewhere in each note that contains the output of the "Insert Current Date" command in Bear (Cmd-Shift-7)
 3. From your Mac's Terminal, run `bear-export.php`
 
-This extracts the public-tagged notes, formats them as a static HTML site, and rsyncs them to your server.  
+This extracts the public-tagged notes, formats them as a static HTML site, and pushes them to [Github](https://github.com/).  
 
 You will need to change some variables in `config.php` to make this work for your particular setup.
 
