@@ -134,6 +134,8 @@ footer li {
 
 pre {
 	margin-bottom: 20px;
+	margin-left: 40px;
+	background-color: black;
 }
 
 ul {
@@ -163,5 +165,9 @@ main article ol li {
 .seealso {
 	color: #446;
 	font-weight: bold;
+}
+
+pre > code {
+	color: #00ff40;
 }
 
