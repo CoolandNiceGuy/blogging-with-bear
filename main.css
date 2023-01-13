@@ -175,3 +175,7 @@ code {
 	background-color: black;
 }
 
+blockquote{
+	border-left: .5rem solid #9CFFFA;
+	padding-left: 1rem;
+}
