@@ -100,6 +100,7 @@ main h2 {
 	font-size: 20px;	
 	font-weight: bold;
 	margin-bottom: 20px;
+	color: lightgreen !important;
 }
 
 main h4 {
@@ -178,4 +179,35 @@ code {
 blockquote{
 	border-left: .5rem solid #9CFFFA;
 	padding-left: 1rem;
+}
+
+@media (max-width: 600px) {
+  article > h1{
+		font-size: 64px;
+  }
+	nav {
+		display: none;
+	}
+	article {
+		max-width: 100%;
+	}
+	main {
+		padding-right: 40px;
+	}
+	h2 {
+		margin-top: 2.5rem;
+		font-size: 48px !important;
+	}
+	p{
+		line-height: 2rem !important;
+	}
+	blockquote{
+		margin: 1.5rem;
+	}
+	pre > code {
+		font-size: 36px;
+	}
+	main article ol li {
+		margin-bottom: 1.5rem !important;
+	}
 }
