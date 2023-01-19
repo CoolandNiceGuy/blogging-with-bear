@@ -179,6 +179,7 @@ code {
 blockquote{
 	border-left: .5rem solid #9CFFFA;
 	padding-left: 1rem;
+	background-color: rgba(156, 255, 250, .05);
 }
 
 @media (max-width: 600px) {
