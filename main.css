@@ -183,7 +183,7 @@ blockquote{
 
 @media (max-width: 600px) {
   article > h1{
-		font-size: 64px;
+		font-size: 28px;
   }
 	nav {
 		display: none;
@@ -196,13 +196,10 @@ blockquote{
 	}
 	h2 {
 		margin-top: 2.5rem;
-		font-size: 48px !important;
+		font-size: 24px !important;
 	}
 	p{
 		line-height: 2rem !important;
-	}
-	blockquote{
-		margin: 1.5rem;
 	}
 	pre > code {
 		font-size: 10px;
