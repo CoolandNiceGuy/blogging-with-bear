@@ -142,7 +142,7 @@ if ( $dir = opendir("./public") )
 	}
 
 	$content .= "</ul>";			
-	$date = "Most recent";
+	// $date = "Most recent";
 }
 
 // Write public/index.html
@@ -345,6 +345,7 @@ function format($file, $title)
         }, $file);
 
 	// I don't know what to do with Bear's #tags and #tags# yet, so just remove them
+	// ToDo: Extract tags to use as elements in UI
 
 	$file = preg_replace("/#(\w+)/", "", $file); 
 	$file = preg_replace("/ (\w+)#/", "", $file); 
