@@ -16,6 +16,9 @@ This extracts the public-tagged notes, formats them as a static HTML site, and p
 
 You will need to change some variables in `config.php` to make this work for your particular setup.
 
+## Live Example
+Check out an example blog site created entirely from this workflow: https://blog.glassvillage.io/
+
 ## Acknowledgements
 
 Uses "Parsedown" by Emanuil Rusev:
